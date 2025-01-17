@@ -1,83 +1,67 @@
 "use client";
 
-import { MarketListItem } from '@/src/interfaces';
-import React, { useState } from 'react'
-import { IoMdClose } from 'react-icons/io';
-import { MdEdit } from 'react-icons/md';
-import { AddMarketListItemModal } from '../add-market-list-item-modal/AddMarketListItemModal';
+import { MarketListItem } from "@/src/interfaces";
+import { useState } from "react";
+import { AddMarketListItemModal, BlurModal, MarketListItemsListItem } from "@/src/components";
+import { useMarketListItemsListItemHook } from "@/src/hooks";
 
 interface Props {
-
-  marketListItems: MarketListItem[],
-
+  marketListItems: MarketListItem[];
 }
 
 export const MarketListItemsList = ({ marketListItems }: Props) => {
 
-  const [isModalShowed, setModalShowed] = useState(false);   
-  const [listItems, setListItems] = useState(marketListItems);   
-
+  
+  const [isAddMarketListItemModalShowed, setAddMarketListItemModalShowed] = useState(false);
+  
+  const { removeMarketListItem, toggleItemChecked, editItemName, setListItems, listItems } = useMarketListItemsListItemHook(marketListItems); 
 
   const addMarketListItem = (newItem: MarketListItem) => {
-
     setListItems([...listItems, newItem]);
-    setModalShowed(false);
+    setAddMarketListItemModalShowed(false);
+  };
 
-  }
+  
 
   return (
     <div>
-        <div className="mb-8">
-          {listItems.map((marketListItem) => (
-            <div
-              key={marketListItem.uuid}
-              className="bg-zinc-700 px-4 mb-4 rounded-md flex justify-between items-center h-[75px]"
-            >
-              <h2 className="">{marketListItem.name}</h2>
-
-              <div className="flex items-center">
-                <button className="ml-4 p-2 bg-zinc-800 rounded-md transition-all hover:bg-blue-900">
-                  <MdEdit size={30} />
-                </button>
-
-                <button className="ml-4 p-2 bg-zinc-800 rounded-md transition-all hover:bg-rose-900">
-                  <IoMdClose size={30} />
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="flex justify-between w-full">
-          <button
-            className="bg-zinc-800 p-4 rounded-md w-1/3 text-center transition-all hover:bg-blue-900"
-
-            onClick={() => {     } }
-          >
-            Guardar
-          </button>
-          <button
-            className="bg-zinc-800 p-4 rounded-md w-1/3 text-center transition-all hover:bg-blue-900"
-            onClick={() => setModalShowed(true)}
-          >
-            Agregar
-          </button>
-        </div>
-
-
-        
-        { isModalShowed && (
-        <div className='w-full h-svh backdrop-blur fixed top-0 left-0 flex items-center justify-center'>
-
-          <AddMarketListItemModal
-            setModalShowed={ setModalShowed }
-            addMarketListItem={ addMarketListItem }
+      <div className="mb-8">
+        {listItems.map((marketListItem) => (
+          <MarketListItemsListItem
+            key={marketListItem.uuid}
+            uuid={marketListItem.uuid}
+            name={marketListItem.name}
+            isChecked={marketListItem.isChecked}
+            removeListItem={removeMarketListItem}
+            toggleItemChecked={toggleItemChecked}
+            editItemName={editItemName}
           />
-
-        </div>
-        
-        )}
-
+        ))}
       </div>
-  )
-}
+
+      <div className="flex justify-between w-full">
+        <button
+          className="bg-zinc-800 p-4 rounded-md w-1/3 text-center transition-all hover:bg-blue-900"
+        >
+          Guardar
+        </button>
+        <button
+          className="bg-zinc-800 p-4 rounded-md w-1/3 text-center transition-all hover:bg-blue-900"
+          onClick={() => setAddMarketListItemModalShowed(true)}
+        >
+          Agregar
+        </button>
+      </div>
+
+      {
+      isAddMarketListItemModalShowed && (
+        <BlurModal>
+          <AddMarketListItemModal
+            setModalShowed={ setAddMarketListItemModalShowed}
+            addMarketListItem={addMarketListItem}
+          />
+        </BlurModal>
+      )}
+    </div>
+  );
+};

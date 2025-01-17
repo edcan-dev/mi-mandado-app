@@ -10,5 +10,6 @@ export interface MarketListItem {
 
   uuid: string;
   name: string;
+  isChecked: boolean;
 
 }

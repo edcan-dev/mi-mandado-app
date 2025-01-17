@@ -48,6 +48,7 @@ export const AddMarketListItemModal = ({ setModalShowed, addMarketListItem }: Pr
             const newItem: MarketListItem = {
               uuid: generateUUID(),
               name: inputValue!,
+              isChecked: false
             }
             addMarketListItem(newItem)
           }}
