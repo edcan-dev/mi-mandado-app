@@ -3,21 +3,22 @@
 import { MarketListItem } from "@/src/interfaces";
 import { useState } from "react";
 import { AddMarketListItemModal, BlurModal, MarketListItemsListItem } from "@/src/components";
-import { useMarketListItemsListItemHook } from "@/src/hooks";
+import { useMarketListItemsHook } from '@/src/hooks';
 
 interface Props {
   marketListItems: MarketListItem[];
+  marketListUUID: string
 }
 
-export const MarketListItemsList = ({ marketListItems }: Props) => {
+export const MarketListItemsList = ({ marketListItems, marketListUUID }: Props) => {
 
   
   const [isAddMarketListItemModalShowed, setAddMarketListItemModalShowed] = useState(false);
   
-  const { removeMarketListItem, toggleItemChecked, editItemName, setListItems, listItems } = useMarketListItemsListItemHook(marketListItems); 
+  const { removeMarketListItem, toggleItemChecked, editItemName, listItems, addMarketListItem } = useMarketListItemsHook(marketListItems, marketListUUID); 
 
-  const addMarketListItem = (newItem: MarketListItem) => {
-    setListItems([...listItems, newItem]);
+  const handleAddMarketListItem = (newItem: MarketListItem) => {
+    addMarketListItem(newItem);
     setAddMarketListItemModalShowed(false);
   };
 
@@ -39,12 +40,12 @@ export const MarketListItemsList = ({ marketListItems }: Props) => {
         ))}
       </div>
 
-      <div className="flex justify-between w-full">
-        <button
+      <div className="flex justify-end w-full">
+        {/* <button
           className="bg-zinc-800 p-4 rounded-md w-1/3 text-center transition-all hover:bg-blue-900"
         >
           Guardar
-        </button>
+        </button> */}
         <button
           className="bg-zinc-800 p-4 rounded-md w-1/3 text-center transition-all hover:bg-blue-900"
           onClick={() => setAddMarketListItemModalShowed(true)}
@@ -58,7 +59,7 @@ export const MarketListItemsList = ({ marketListItems }: Props) => {
         <BlurModal>
           <AddMarketListItemModal
             setModalShowed={ setAddMarketListItemModalShowed}
-            addMarketListItem={addMarketListItem}
+            addMarketListItem={ handleAddMarketListItem }
           />
         </BlurModal>
       )}

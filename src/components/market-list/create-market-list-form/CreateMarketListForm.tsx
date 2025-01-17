@@ -1,11 +1,12 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { BlurModal, AddMarketListItemModal, MarketListItemsListItem } from "@/src/components";
 import { MarketList, MarketListItem } from "@/src/interfaces";
 import { generateUUID } from "@/src/utils";
-import { useMarketListItemsListItemHook } from "@/src/hooks";
-import { saveMarketListService } from "@/src/services";
+import { useMarketListItemsHook } from "@/src/hooks";
+import { saveMarketList } from "@/src/services";
+import { redirect } from "next/navigation";
 
 export const CreateMarketListForm = () => {
 
@@ -18,7 +19,7 @@ export const CreateMarketListForm = () => {
 
   const [isAddMarketListItemModalShowed, setAddMarketListItemModalShowed] = useState(false);
 
-  const { editItemName, listItems, removeMarketListItem, saveMarketListItems, setListItems, toggleItemChecked } = useMarketListItemsListItemHook(marketList.items);
+  const { editItemName, listItems, removeMarketListItem, setListItems, toggleItemChecked } = useMarketListItemsHook(marketList.items, marketList.uuid);
 
 
   const addMarketListItem = (newItem: MarketListItem) => {
@@ -38,7 +39,8 @@ export const CreateMarketListForm = () => {
       items: listItems
     }
 
-    saveMarketListService(newMarketList);
+    saveMarketList(newMarketList);
+    redirect('/')
   }
 
 

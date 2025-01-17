@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 import { MdCheckBox, MdCheckBoxOutlineBlank, MdEdit } from "react-icons/md";
-import { AddMarketListItemModal, BlurModal } from "@/src/components";
+import { BlurModal } from "@/src/components";
 import { EditMarketListItemName } from '../edit-market-list-item-name/EditMarketListItemName';
 
 interface Props {
@@ -22,7 +22,6 @@ export const MarketListItemsListItem = ({
   isChecked,
   removeListItem,
   toggleItemChecked,
-  editItemName,
 }: Props) => {
   const [isEditMarketListItemsModalShowed, setEditMarketListItemsModalShowed] =
     useState(false);

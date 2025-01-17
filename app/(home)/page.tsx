@@ -1,13 +1,9 @@
 
-import { getMarketLists } from "@/src/services";
+import { UserMarketLists } from "@/src/components";
 import Link from "next/link";
-import { IoIosArrowForward } from "react-icons/io";
 
+export default function HomePage() {
 
-
-export default function Home() {
-
-  const marketLists = getMarketLists();
   return (
     <>
 
@@ -15,25 +11,7 @@ export default function Home() {
 
         <h1 className="text-xl text-center mb-8">Listas Creadas</h1>
 
-        <div className="mb-8">
-
-          {
-            marketLists.map((marketList) => (
-
-              <Link
-                href={`/market-list/${marketList.uuid}`}
-                key={marketList.uuid}
-                className="bg-zinc-700 px-4 mb-4 rounded-md flex justify-between items-center h-[75px]"
-              >
-                <h2 className="">{ marketList.name }</h2>
-                <IoIosArrowForward size={ 50 } />
-
-              </Link>
-
-            ))
-          }
-
-        </div>
+        <UserMarketLists />
 
         <div className="flex justify-between w-full ">
           <Link

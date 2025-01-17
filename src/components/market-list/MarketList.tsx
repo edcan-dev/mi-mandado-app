@@ -1,16 +1,19 @@
 "use client";
 
-import { MarketList as MarketListI } from "@/src/interfaces";
 import { MarketListItemsList } from "./market-list-items-list/MarketListItemsList";
-import { useState } from "react";
+import { getMarketListByUUID } from "@/src/services";
+import { redirect } from "next/navigation";
 
 interface Props {
-  marketList: MarketListI;
+  marketListUUID: string
 }
 
-export const MarketList = ( { marketList }: Props ) => {
+export const MarketList = ( { marketListUUID }: Props ) => {
 
-  const [marketListState, setMarketListState] = useState(marketList);
+  const marketList = getMarketListByUUID(marketListUUID);
+  if (!marketList) redirect("/");
+
+  // const [marketListState, setMarketListState] = useState(marketList)
 
   return (
     <div>
@@ -19,6 +22,7 @@ export const MarketList = ( { marketList }: Props ) => {
         {/* MarketListItemsList */}
         <MarketListItemsList
           marketListItems={ marketList.items }
+          marketListUUID={ marketListUUID }
         />
 
       </div>

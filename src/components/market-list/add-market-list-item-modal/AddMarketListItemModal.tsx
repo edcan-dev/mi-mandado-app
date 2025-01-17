@@ -2,7 +2,6 @@
 
 import { MarketListItem } from "@/src/interfaces";
 import { generateUUID } from "@/src/utils";
-import { randomUUID } from "crypto";
 import React, { useState } from "react";
 import { IoMdClose } from "react-icons/io";
 

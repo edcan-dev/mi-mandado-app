@@ -4,5 +4,7 @@ export * from './market-list/create-market-list-form/CreateMarketListForm';
 export * from './market-list/edit-market-list-item-name/EditMarketListItemName';
 export * from './market-list/market-list-items-list/MarketListItemsList';
 export * from './market-list/market-list-items-list/MarketListItemsListItem';
+export * from './market-lists/market-lists-link-list/MarketListsLinkList';
+export * from './market-lists/user-market-lists/UserMarketLists';
 export * from './ui/blur-modal/BlurModal';
 export * from './ui/header/Header';
